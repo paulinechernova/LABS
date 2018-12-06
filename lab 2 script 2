@@ -1,0 +1,50 @@
+#!/bin/bash
+
+GNU=$1
+LIB=$2
+
+BASE=$HOME/GNUPLOT
+
+if [[ $# = 0 ]]
+        then
+                echo 'INCORRECT INPUT FORMAT. WRITE AS ARGUMENTS VERSION OF GNUPLOT & VERSION OF LIBGD'
+        else
+mkdir -p $HOME/GNUPLOT
+mkdir -p $BASE/DOWNLOADS
+mkdir -p $BASE/DOWNLOADS/GNU
+
+if [[ -d $BASE/DOWNLOADS/GNU/$GNU ]]
+        then
+                echo "THIS VERSION OF GNUPLOT IS  DOWNLOADED EARLY"
+        else
+                mkdir $BASE/DOWNLOADS/GNU/$GNU
+                cd $BASE/DOWNLOADS/GNU/$GNU
+                wget https://kent.dl.sourceforge.net/project/gnuplot/gnuplot/$GNU/gnuplot-$GNU.tar.gz --no-check-certificate
+                tar -xzvf gnuplot-$GNU.tar.gz
+fi
+
+mkdir -p $BASE/DOWNLOADS/LIBGD
+
+if [[ -d $BASE/DOWNLOADS/LIBGD/$LIB ]]
+        then
+                echo "THIS VERSION OF LIBGD IS  DOWNLOADED EARLY"
+        else
+                mkdir $BASE/DOWNLOADS/LIBGD/$LIB
+                cd $BASE/DOWNLOADS/LIBGD/$LIB
+                wget https://github.com/libgd/libgd/releases/download/gd-$LIB/libgd-$LIB.tar.gz -O $LIB.tar.gz 
+                tar -xzvf $LIB.tar.gz 
+fi
+
+mkdir -p $HOME/INSTALL
+
+mkdir -p $HOME/INSTALL/LIBGD
+if [[ -d $HOME/INSTALL/LIBGD/$LIB ]]
+        then
+                echo "THIS VERSION OF LIBGD IS INSTALLED EARLY"
+        else
+                mkdir $HOME/INSTALL/LIBGD/$LIB
+                cd $BASE/DOWNLOADS/LIBGD/$LIB/libgd-$LIB
+                ./configure --prefix=$HOME/INSTALL/LIBGD/$LIB 
+                make install 
+                echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/INSTALL/LIBGD/$LIB/lib" >> $HOME/.bash_profile
+fi
