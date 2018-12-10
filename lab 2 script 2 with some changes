@@ -1,0 +1,70 @@
+#!/bin/bash
+
+GNU=$1
+LIB=$2
+BASE=$HOME/GNULIB
+
+if [[ $# = 0 ]]
+        then
+                echo 'INCORRECT INPUT FORMAT. WRITE AS ARGUMENTS VERSION OF GNU & VERSION OF LIBGD'
+        else
+mkdir -p $BASE/DOWNLOADS
+mkdir -p $BASE/DOWNLOADS/GNU     
+
+if [[ -d $BASE/DOWNLOADS/GNU/$GNU ]]
+        then
+                echo "THIS VERSION OF GNU WAS DOWNLOADED"
+        else
+                mkdir $BASE/DOWNLOADS/GNU/$GNU
+                cd $BASE/DOWNLOADS/GNU/$GNU
+                wget https://kent.dl.sourceforge.net/project/gnuplot/gnuplot/$GNU/gnuplot-$GNU.tar.gz --no-check-certificate
+                tar -xzvf GNU-$GNU.tar.gz
+fi
+
+mkdir -p $BASE/DOWNLOADS/LIBGD
+
+if [[ -d $BASE/DOWNLOADS/LIBGD/$LIB ]]
+        then
+                echo "THIS VERSION OF LIBGD WAS  DOWNLOADED"
+        else
+                mkdir $BASE/DOWNLOADS/LIBGD/$LIB
+                cd $BASE/DOWNLOADS/LIBGD/$LIB
+                wget https://github.com/libgd/libgd/releases/download/gd-$LIB/libgd-$LIB.tar.gz -O $LIB.tar.gz 
+                tar -xzvf $LIB.tar.gz 
+fi
+
+mkdir -p $HOME/INSTALL
+
+mkdir -p $HOME/INSTALL/LIBGD
+if [[ -d $HOME/INSTALL/LIBGD/$LIB ]]
+        then
+                echo "THIS VERSION OF LIBGD WAS INSTALLED"
+        else
+                mkdir $HOME/INSTALL/LIBGD/$LIB
+                cd $BASE/DOWNLOADS/LIBGD/$LIB/LIBGD-$LIB
+                ./configure --prefix=$HOME/INSTALL/LIBGD/$LIB 
+                make install 
+                echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/INSTALL/LIBGD/$LIB/lib" >> $HOME/.bash_profile
+fi
+
+mkdir -p $BASE/INSTALL/GNU
+if [[ -d $BASE/INSTALL/GNU/$GNU ]]
+        then
+                echo "THIS VERSION OF GNUPLOT WAS INSTALLED"
+        else
+                mkdir $BASE/INSTALL/GNU/$GNU
+                cd $BASE/DOWNLOADS/GNU/$GNU/GNU-$GNU
+		./configure --prefix=$BASE/INSTALL/GNU/$GNU --with-gd=$BASE/INSTALL/LIBGD/$LIB
+                make install
+fi
+
+mkdir -p $HOME/bin
+if [[ -e $HOME/bin/GNU-$GNU-LIBGD-$LIB ]]
+	then
+		echo "OK"
+	else
+		ln -s $BASE/INSTALL/GNU/$GNU/bin/GNU $HOME/bin/GNU-$GNU-LIBGD-$LIB
+		echo "OK"
+fi
+
+fi
