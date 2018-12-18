@@ -1,0 +1,19 @@
+TASK 1
+1. C:\Users\Andrey\Desktop\putty\PuTTY-0.66-RU-16\putty.org.ru\PuTTY pscp -P 9922 -i C:\Users\Andrey\Desktop\AiPO\cluster-pchernova C:\Users\Andrey\Desktop\AiPO\error_log pchernova@194.106.194.42:/gpfs/home/pchernova/ERR
+2. cat error_log | awk 'NF>5 {print( $7" "$8" "$1" "$2" " $3" "$5)}' >> text.txt | uniq text.txt
+3.  cat error_log | grep -P "\[client" | awk 'NF>5 {print( $7" "$8" "$1" "$2" " $3" "$5)}'|sort | uniq -c
+
+
+TASK 2
+1.
+tmux
+find ~/ -name "*.log" > res2_1.txt
+2. find ~/ -name "*.log" | xargs grep "error" > res2_2.txt
+
+
+TASK 3
+^(https?:\/\/)?([\da-z\.-]+)
+
+
+TASK 4 
+(\b\w+\b)\s++(?!\1)
