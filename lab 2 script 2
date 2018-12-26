@@ -4,7 +4,7 @@ GNU=$1
 LIB=$2
 BASE=$HOME/GNULIB
 
-if [[ $# = 0 ]]
+if [[ $# -lt 2 ]]
 	then
 		echo "INCORRECT INPUT FORMAT. WRITE AS ARGUMENTS VERSION OF GNU & VERSION OF LIBGD"
 	else 
