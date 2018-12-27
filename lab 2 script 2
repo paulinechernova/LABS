@@ -53,7 +53,7 @@ if [[ -d $BASE/INSTALL/GNUPLOT/$GNU ]]
         else
                 mkdir $BASE/INSTALL/GNUPLOT/$GNU
                 cd $BASE/DOWNLOADS/GNUPLOT/$GNU/gnuplot-$GNU
-		./configure --prefix=$BASE/INSTALL/GNUPLOT/$GNU --with-gd=$BASE/INSTALL/libgd/$LIB
+		./configure --prefix=$BASE/INSTALL/GNUPLOT/$GNU --with-gd=$BASE/INSTALL/LIBGD/$LIB
                 make install
 fi
 
