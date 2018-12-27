@@ -1,13 +1,26 @@
 #!/bin/bash
 
+echo "########################################################"
+echo "#Если было введено 2 версии, начнётся установка Gnuplot#"
+echo "#указанных версий. Если нет, программа попросит        #"
+echo "#ввести версию gnuplot и libgd, после чего             #"
+echo "#начнётся установка.                                   #"
+echo "#Формат ввода ver_gnuplot ver_libgd                    #"
+echo "########################################################"
+
 GNU=$1
 LIB=$2
 BASE=$HOME/GNULIB
 
-if [[ $# -lt 2 ]]
+if [[ $# -ne 2 ]]
 	then
-		echo "INCORRECT INPUT FORMAT. WRITE AS ARGUMENTS VERSION OF GNU & VERSION OF LIBGD"
+		echo "Введите версию Gnuplot"
+        	read GNU
+        	echo "Введите версию libgd"
+       		read LIB
 	else 
+		echo "Installation started"
+fi
 mkdir -p $BASE/DOWNLOADS
 
 mkdir -p $BASE/DOWNLOADS/GNUPLOT
@@ -64,6 +77,4 @@ if [[ -e $HOME/bin/GNUPLOT-$GNU-LIBGD-$LIB ]]
 	else
 		ln -s $BASE/INSTALL/GNUPLOT/$GNU/bin/gnuplot $HOME/bin/GNUPLOT-$GNU-LIBGD-$LIB
 		echo "OK"
-fi
-
 fi
