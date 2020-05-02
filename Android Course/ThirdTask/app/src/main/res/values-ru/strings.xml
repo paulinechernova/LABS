@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Третье задание</string>
+    <string name="makePhoto">Сделать фото</string>
+    <string name="tapYourName">Напишите ваше имя</string>
+    <string name="permissionDenied">Отказано в доступе</string>
+</resources>
